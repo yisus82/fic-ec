@@ -1,0 +1,225 @@
+/*************************************************/
+/*************************************************/
+/**************** PRACTICA DE DLX ****************/
+/**************** REALIZADA POR:  ****************/
+/*************************************************/
+/** Jesus Angel Perez-Roca Fernandez (infjpf02) **/
+/*************************************************/
+/*************************************************/
+
+
+1.
+
+a) Se necesitan 106 ciclos de reloj y un CPI=106/49=2.16, donde 49 es el numero de instrucciones ejecutadas.
+
+b)	Tipo Riesgo		Instruccion causante	Instruccion perjudicada		Burbujas que produce
+
+	  RAW			 lw r2,n(r0)		 addi r2,r2,0xffff		 1 (en el ciclo 6)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 1 (en el ciclo 13)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 17-23)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 1 (en el ciclo 29)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 33-39)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 1 (en el ciclo 45)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 49-55)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 1 (en el ciclo 61)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 65-71)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 1 (en el ciclo 77)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 81-87)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 1 (en el ciclo 93)
+
+
+c)	Instruccion causante	Instruccion perjudicada		Tipo de anticipacion
+
+	 lw r2,n(r0)		 addi r2,r2,0xffff		 WB/EX	(en el ciclo 7)
+
+	 addi r3,r3,0x1		 sgt r4,r3,r2			 MEM/EX	(en el ciclo 10)
+
+	 lf f8,const(r1)	 divf f12,f12,f8		 WB/EX  (en el ciclo 14)
+
+	 addi r3,r3,0x1		 sgt r4,r3,r2			 MEM/EX	(en el ciclo 26)
+
+	 lf f8,const(r1)	 divf f12,f12,f8		 WB/EX  (en el ciclo 30)
+
+	 addi r3,r3,0x1		 sgt r4,r3,r2			 MEM/EX	(en el ciclo 42)
+
+	 lf f8,const(r1)	 divf f12,f12,f8		 WB/EX  (en el ciclo 46)
+
+	 addi r3,r3,0x1		 sgt r4,r3,r2			 MEM/EX	(en el ciclo 58)
+
+	 lf f8,const(r1)	 divf f12,f12,f8		 WB/EX  (en el ciclo 62)
+
+	 addi r3,r3,0x1		 sgt r4,r3,r2			 MEM/EX	(en el ciclo 74)
+
+	 lf f8,const(r1)	 divf f12,f12,f8		 WB/EX  (en el ciclo 78)
+
+	 addi r3,r3,0x1		 sgt r4,r3,r2			 MEM/EX	(en el ciclo 90)
+
+	 lf f8,const(r1)	 divf f12,f12,f8		 WB/EX  (en el ciclo 94)
+
+
+
+   Si no hubiera adelantamiento:
+
+	Tipo Riesgo		Instruccion causante	Instruccion perjudicada		Burbujas que produce
+
+	  RAW			 lw r2,n(r0)		 addi r2,r2,0xffff		 2 (en los ciclos 5-6)
+
+	  RAW			 addi r3,r3,0x1		 sgt r4,r3,r2			 2 (en los ciclos 10-11)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 2 (en los ciclos 15-16)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 21-27)
+
+	  RAW			 addi r3,r3,0x1		 sgt r4,r3,r2			 2 (en los ciclos 29-30)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 2 (en los ciclos 34-35)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 40-46)
+
+	  RAW			 addi r3,r3,0x1		 sgt r4,r3,r2			 2 (en los ciclos 48-49)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 2 (en los ciclos 53-54)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 59-65)
+
+	  RAW			 addi r3,r3,0x1		 sgt r4,r3,r2			 2 (en los ciclos 67-68)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 2 (en los ciclos 72-73)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 78-84)
+
+	  RAW			 addi r3,r3,0x1		 sgt r4,r3,r2			 2 (en los ciclos 86-87)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 2 (en los ciclos 91-92)
+
+	  WAW			 divf f12,f12,f8	 lf f12,ptas(r5)		 7 (en los ciclos 97-103)
+
+	  RAW			 addi r3,r3,0x1		 sgt r4,r3,r2			 2 (en los ciclos 105-106)
+
+	  RAW			 lf f8,const(r1)	 divf f12,f12,f8		 2 (en los ciclos 110-111)
+
+
+   Ademas, si no hubiera adelantamiento, el numero de ciclos aumentaria de 106 a 125.
+
+d)
+
+e) Los saltos se producen una vez terminada la etapa ID para reducir el numero de burbujas de control.
+
+f) Despues de recolocar las instrucciones para separar en el main las instrucciones lw r2,n(r0) y addi r2,r2,-1 y 
+   en LL las instrucciones lf f12,ptas(r5) de divf f12,f12,f8 para minimizar el numero de burbujas que se producen,
+   el codigo resultante es el siguiente:
+
+	.data 0
+
+	.global const
+const:	.float 166.386
+
+	.global n
+n:	.word 6
+
+	.global ptas
+ptas:	.float 85.0, 100.0, 30.0, 4.0, 20.0, 12.0
+
+
+	.text
+	.global main
+
+main:	lw   r2,n(r0)
+	addi r5,r0,0
+	addi r3,r0,0
+	addi r2,r2,-1
+
+LL:	addi r3,r3,1
+	sgt  r4,r3,r2
+	lf   f8,const(r1)
+	lf   f12,ptas(r5)
+	addi r5,r5,4
+	divf f12,f12,f8
+	beqz r4,LL
+
+
+	nop
+	nop
+
+
+	trap #0
+
+
+2.
+  El codigo del producto matriz vector en punto flotante (para i=3 y j=2) es el siguiente:
+
+	.data 0
+
+	.global i
+i:	.word 3
+
+	.global j
+j:	.word 2
+
+	.global m
+m:	.float 1.0, 2.0, 3.0, 4.0, 5.0, 6.0
+
+	.global v
+v:	.float 7.0, 8.0
+
+	.global x
+x:	.float 0.0, 0.0, 0.0
+
+
+	.text
+	.global main
+
+main:	lw r2,i(r0)
+	lw r3,j(r0)
+	addi r4,r0,0
+	addi r5,r0,0
+	addi r6,r6,0	
+	addi r7,r3,0
+
+loopj:	ld f4,v(r5)
+	ld f2,m(r4)
+	multd f6,f2,f4
+	addi r4,r4,4
+	addi r5,r5,4
+	addi r3,r3,-1
+	addd f8,f8,f6
+	beqz r3,loopi
+	j loopj
+
+loopi:	sd x(r6),f8
+	addi r2,r2,-1
+	add  r3,r3,r7
+	addi r6,r6,4
+	addi r5,r5,0
+	addd f8,f0,f0
+	beqz r2,fin
+	j loopj
+
+fin:	nop
+	nop
+
+
+
+a)  Se necesitan 108 ciclos de reloj y el CPI es de 108/83=1.30, donde 83 es el numero de instrucciones ejecutadas.
+    Se producen 12 burbujas RAW y ninguna WAW. De las burbujas RAW 6 son producidas por la instruccion lf f2,m(r4) 
+    siendo la perjudicada la instruccion multf f6,f2,f4 y los ciclos en los que se producen son 11, 23, 43, 55, 75 y 87.
+    Las otras 6 burbujas las produce la instruccion multf f6,f2,f4 siendo la perjudicada addf f8,f8,f6 y se producen en
+    los ciclos 16, 28, 48, 60, 80 y 92.
+
+b)
+
+c)
+
+d)
+
